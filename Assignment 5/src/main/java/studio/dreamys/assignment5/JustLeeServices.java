@@ -87,7 +87,7 @@ public class JustLeeServices {
 
                     //set unique pubid
                     int count = pubCount.getInt(1);
-                    if (book.getPublisher().getPubId() <= count && book.getPublisher().getPubId() > 0) {
+                    if (book.getPublisher().getPubId() <= count) {
                         book.getPublisher().setPubId(count + 1);
                     }
 
