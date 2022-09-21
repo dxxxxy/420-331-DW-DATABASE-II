@@ -7,14 +7,17 @@ public class JustLeeServices {
     public static String url = "jdbc:oracle:thin:@198.168.52.211:1521/pdbora19c.dawsoncollege.qc.ca";
     public static Connection conn;
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
         //connection
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter your username: ");
-        String username = sc.nextLine();
-        System.out.println("Enter your password: ");
-        String password = sc.nextLine();
-        conn = DriverManager.getConnection(url, username, password);
+        String username = System.console().readLine("Enter your username: ");
+        String password = String.valueOf(System.console().readPassword("Enter your password: "));
+        try {
+            conn = DriverManager.getConnection(url, username, password);
+        } catch (SQLException e) {
+            System.out.println("Connection failed");
+            e.printStackTrace();
+            return;
+        }
 
         //different types of publisher constructors
         Publisher publisher = new Publisher("Publisher", "Contact", "123-456-7890"); //non existing unique publisher
