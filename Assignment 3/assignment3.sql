@@ -1,12 +1,12 @@
 create or replace PACKAGE book_store AS
 --    FUNCTION price_after_discount(book_isbn VARCHAR2) RETURN NUMBER;
+    TYPE customerarray IS VARRAY(100) OF NUMBER(4);
     FUNCTION get_price_after_tax(book_isbn VARCHAR2) RETURN NUMBER;
     FUNCTION book_purchasers(book_isbn VARCHAR2) RETURN customerarray;
     PROCEDURE show_purchases;
     PROCEDURE add_book(isbn_ IN VARCHAR2, title_ IN VARCHAR2, pubdate_ IN DATE, pubid_ IN NUMBER, cost_ IN NUMBER, retail_ IN NUMBER, discount_ IN NUMBER, category_ IN VARCHAR2);
-END book_store;
-/
-    CREATE OR REPLACE TYPE customerarray IS VARRAY(100) OF NUMBER(4);
+
+    END book_store;
 /
 create or replace PACKAGE BODY book_store AS
     FUNCTION price_after_discount(book_isbn VARCHAR2)

@@ -1,5 +1,6 @@
 create or replace PACKAGE book_store AS
 --    FUNCTION price_after_discount(book_isbn VARCHAR2) RETURN NUMBER;
+    TYPE customerarray IS VARRAY(100) OF NUMBER(4);
     FUNCTION get_price_after_tax(book_isbn VARCHAR2) RETURN NUMBER;
     FUNCTION book_purchasers(book_isbn VARCHAR2) RETURN customerarray;
     PROCEDURE show_purchases;
@@ -9,8 +10,6 @@ create or replace PACKAGE book_store AS
     category_not_found EXCEPTION;
     publisher_already_exists EXCEPTION;
 END book_store;
-/
-    CREATE OR REPLACE TYPE customerarray IS VARRAY(100) OF NUMBER(4);
 /
 create or replace PACKAGE BODY book_store AS
     FUNCTION price_after_discount(book_isbn VARCHAR2)
