@@ -1,0 +1,9 @@
+SELECT * FROM BUSINESS_BOOKS;
+
+Row fetch times (rows in seconds):
+    Without index: 2 in 0.007
+    With index: 2 in 0.006
+Analysis:
+    There is a very small and unnoticeable performance increase. 
+    It is probably due to the small amount of data we have, since avoiding searching all rows isn't that much beneficial with small amounts of data. 
+    However, as we get to work with bigger tables, I would expect that difference to increase, since the database will know where to search the specified row.
