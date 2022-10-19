@@ -46,20 +46,20 @@ public class Education implements SQLData {
 
     @Override
     public void readSQL(SQLInput stream, String typeName) throws SQLException {
-        this.education_id = stream.readInt();
-        this.education = stream.readString();
+        education_id = stream.readInt();
+        education = stream.readString();
     }
 
     @Override
     public void writeSQL(SQLOutput stream) throws SQLException {
-        stream.writeInt(this.education_id);
-        stream.writeString(this.education);
+        stream.writeInt(education_id);
+        stream.writeString(education);
     }
 
     public void addToDatabase(Connection conn) {
         try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO EDUCATION VALUES (?, ?)")) {
-            stmt.setInt(1, this.education_id);
-            stmt.setString(2, this.education);
+            stmt.setInt(1, education_id);
+            stmt.setString(2, education);
             stmt.executeUpdate();
 
             if (!stmt.isClosed()) stmt.close();

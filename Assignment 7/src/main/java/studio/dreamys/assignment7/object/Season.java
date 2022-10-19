@@ -46,20 +46,20 @@ public class Season implements SQLData {
 
     @Override
     public void readSQL(SQLInput stream, String typeName) throws SQLException {
-        this.season_id = stream.readInt();
-        this.season = stream.readString();
+        season_id = stream.readInt();
+        season = stream.readString();
     }
 
     @Override
     public void writeSQL(SQLOutput stream) throws SQLException {
-        stream.writeInt(this.season_id);
-        stream.writeString(this.season);
+        stream.writeInt(season_id);
+        stream.writeString(season);
     }
 
     public void addToDatabase(Connection conn) {
         try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO SEASON VALUES (?, ?)")) {
-            stmt.setInt(1, this.season_id);
-            stmt.setString(2, this.season);
+            stmt.setInt(1, season_id);
+            stmt.setString(2, season);
             stmt.executeUpdate();
 
             if (!stmt.isClosed()) stmt.close();

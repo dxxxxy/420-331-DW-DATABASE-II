@@ -47,20 +47,20 @@ public class Term implements SQLData {
 
     @Override
     public void readSQL(SQLInput stream, String typeName) throws SQLException {
-        this.term_id = stream.readInt();
-        this.season_id = stream.readInt();
+        term_id = stream.readInt();
+        season_id = stream.readInt();
     }
 
     @Override
     public void writeSQL(SQLOutput stream) throws SQLException {
-        stream.writeInt(this.term_id);
-        stream.writeInt(this.season_id);
+        stream.writeInt(term_id);
+        stream.writeInt(season_id);
     }
 
     public void addToDatabase(Connection conn) {
         try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO TERM VALUES (?, ?)")) {
-            stmt.setInt(1, this.term_id);
-            stmt.setInt(2, this.season_id);
+            stmt.setInt(1, term_id);
+            stmt.setInt(2, season_id);
             stmt.executeUpdate();
 
             if (!stmt.isClosed()) stmt.close();

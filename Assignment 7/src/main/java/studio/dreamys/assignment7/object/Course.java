@@ -123,41 +123,41 @@ public class Course implements SQLData {
 
     @Override
     public void readSQL(SQLInput stream, String typeName) throws SQLException {
-        this.id = stream.readString();
-        this.term_id = stream.readInt();
-        this.education_id = stream.readInt();
-        this.name = stream.readString();
-        this.description = stream.readString();
-        this.clazz = stream.readInt();
-        this.lecture = stream.readInt();
-        this.homework = stream.readInt();
-        this.total = stream.readInt();
+        id = stream.readString();
+        term_id = stream.readInt();
+        education_id = stream.readInt();
+        name = stream.readString();
+        description = stream.readString();
+        clazz = stream.readInt();
+        lecture = stream.readInt();
+        homework = stream.readInt();
+        total = stream.readInt();
     }
 
     @Override
     public void writeSQL(SQLOutput stream) throws SQLException {
-        stream.writeString(this.id);
-        stream.writeInt(this.term_id);
-        stream.writeInt(this.education_id);
-        stream.writeString(this.name);
-        stream.writeString(this.description);
-        stream.writeInt(this.clazz);
-        stream.writeInt(this.lecture);
-        stream.writeInt(this.homework);
-        stream.writeInt(this.total);
+        stream.writeString(id);
+        stream.writeInt(term_id);
+        stream.writeInt(education_id);
+        stream.writeString(name);
+        stream.writeString(description);
+        stream.writeInt(clazz);
+        stream.writeInt(lecture);
+        stream.writeInt(homework);
+        stream.writeInt(total);
     }
 
     public void addToDatabase(Connection conn) {
         try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO COURSE VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
-            stmt.setString(1, this.id);
-            stmt.setInt(2, this.term_id);
-            stmt.setInt(3, this.education_id);
-            stmt.setString(4, this.name);
-            stmt.setString(5, this.description);
-            stmt.setInt(6, this.clazz);
-            stmt.setInt(7, this.lecture);
-            stmt.setInt(8, this.homework);
-            stmt.setInt(9, this.total);
+            stmt.setString(1, id);
+            stmt.setInt(2, term_id);
+            stmt.setInt(3, education_id);
+            stmt.setString(4, name);
+            stmt.setString(5, description);
+            stmt.setInt(6, clazz);
+            stmt.setInt(7, lecture);
+            stmt.setInt(8, homework);
+            stmt.setInt(9, total);
             stmt.executeUpdate();
 
             if (!stmt.isClosed()) stmt.close();
