@@ -44,14 +44,14 @@ INSERT INTO EDUCATION VALUES (1, 'Concentration');
 INSERT INTO EDUCATION VALUES (2, 'General');
 
 INSERT INTO COURSE VALUES('420-110-DW', 1, 1, 'Programming 1',
-                          'The course will introduce the student to the basic building blocks (sequential,selection and repetitive control structures) and modules (methods and classes)used to write a program. The student will use the Java programming language toimplement the algorithms studied. The array data structure is introduced, andstudent will learn how to program with objects.',
+                          'The course will introduce the student to the basic building blocks (sequential,selection and repetitive control structures) and modules (methods and classes)used to write a program. The student will use the Java programming language to implement the algorithms studied. The array data structure is introduced, and student will learn how to program with objects.',
                           3, 3, 3, 90);
 
 INSERT INTO COURSE VALUES ('420-210-DW', 2, 1, 'Programming 2',
-                           'The course will introduce the student to basic object-oriented methodology inorder to design, implement, use and modify classes, to write programs in theJava language that perform interactive processing, array and string processing,and data validation. Object-oriented features such as encapsulation andinheritance will be explored.',
+                           'The course will introduce the student to basic object-oriented methodology inorder to design, implement, use and modify classes, to write programs in theJava language that perform interactive processing, array and string processing,and data validation. Object-oriented features such as encapsulation and inheritance will be explored.',
                            3, 3, 3, 90);
 
-CREATE TYPE COURSE_TYPE AS OBJECT (
+CREATE OR REPLACE TYPE COURSE_TYPE AS OBJECT (
     id VARCHAR2(11),
     term_id NUMBER(1),
     education_id VARCHAR2(30),
@@ -63,17 +63,17 @@ CREATE TYPE COURSE_TYPE AS OBJECT (
     total NUMBER(3)
 );
 
-CREATE TYPE TERM_TYPE AS OBJECT (
+CREATE OR REPLACE TYPE TERM_TYPE AS OBJECT (
     term_id NUMBER(1),
     season_id NUMBER(1)
 );
 
-CREATE TYPE EDUCATION_TYPE AS OBJECT (
+CREATE OR REPLACE TYPE EDUCATION_TYPE AS OBJECT (
     education_id NUMBER(1),
     education VARCHAR2(20)
 );
 
-CREATE TYPE SEASON_TYPE AS OBJECT (
+CREATE OR REPLACE TYPE SEASON_TYPE AS OBJECT (
     season_id NUMBER(1),
     season VARCHAR2(20)
 );

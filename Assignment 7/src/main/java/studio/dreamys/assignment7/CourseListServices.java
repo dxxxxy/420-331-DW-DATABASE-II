@@ -1,6 +1,9 @@
 package studio.dreamys.assignment7;
 
 import studio.dreamys.assignment7.object.Course;
+import studio.dreamys.assignment7.object.Education;
+import studio.dreamys.assignment7.object.Season;
+import studio.dreamys.assignment7.object.Term;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -27,45 +30,18 @@ public class CourseListServices {
         }
     }
 
-    public void addCourse(String id, int term, int education, String name, String description, int clazz, int lecture, int homework, int total) {
-        System.out.println("Enter the course id: ");
-        String id = sc.nextLine();
+    public void addCourse(Season season, Term term, Education education, Course course) {
+        season.addToDatabase(conn);
+        term.addToDatabase(conn);
+        education.addToDatabase(conn);
 
-        System.out.println("What term is this course in?");
-        int term = Integer.parseInt(sc.nextLine());
-        if (term < 1 || term > 6) {
-            System.out.println("Invalid term");
-            return;
+        try {
+            course.addToDatabase(conn);
+
+            System.out.println("Course added successfully!");
+            System.out.println(course);
+        } catch (Exception e) {
+            System.out.println("Could not add course!");
         }
-
-        System.out.println("Is this course concentration [1] or general [2] education?");
-        int education = Integer.parseInt(sc.nextLine());
-        if (education < 1 || education > 2) {
-            System.out.println("Invalid education type");
-            return;
-        }
-
-        System.out.println("What is the name of the course?");
-        String name = sc.nextLine();
-
-        System.out.println("What is the description of the course?");
-        String description = sc.nextLine();
-
-        System.out.println("How many hours of CLASS work per WEEK are there?");
-        int clazz = Integer.parseInt(sc.nextLine());
-
-        System.out.println("How many hours of LECTURE work per WEEK are there?");
-        int lecture = Integer.parseInt(sc.nextLine());
-
-        System.out.println("How many hours of HOMEWORK work per WEEK are there?");
-        int homework = Integer.parseInt(sc.nextLine());
-
-        System.out.println("How many hours of TOTAL work for the WHOLE SEMESTER are there?");
-        int total = Integer.parseInt(sc.nextLine());
-
-        /* finished collecting data */
-
-        Course course = new Course(id, term, education, name, description, clazz, lecture, homework, total);
-        course.addToDatabase(conn);
     }
 }
