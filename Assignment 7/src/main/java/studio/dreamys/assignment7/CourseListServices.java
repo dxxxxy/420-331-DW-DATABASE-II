@@ -34,14 +34,6 @@ public class CourseListServices {
         season.addToDatabase(conn);
         term.addToDatabase(conn);
         education.addToDatabase(conn);
-
-        try {
-            course.addToDatabase(conn);
-
-            System.out.println("Course added successfully!");
-            System.out.println(course);
-        } catch (Exception e) {
-            System.out.println("Could not add course!");
-        }
+        course.addToDatabase(conn);
     }
 }

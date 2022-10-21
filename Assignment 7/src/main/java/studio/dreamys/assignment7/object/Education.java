@@ -62,7 +62,9 @@ public class Education implements SQLData {
             stmt.setString(2, education);
             stmt.executeUpdate();
 
-            if (!stmt.isClosed()) stmt.close();
+            System.out.println(this + " added to the database.");
+        } catch (SQLIntegrityConstraintViolationException e) {
+            System.out.println(this + " already exists in the database.");
         } catch (SQLException e) {
             e.printStackTrace();
         }

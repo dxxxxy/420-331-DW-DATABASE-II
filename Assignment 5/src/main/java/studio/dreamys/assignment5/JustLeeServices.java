@@ -45,6 +45,7 @@ public class JustLeeServices {
             PreparedStatement ps = conn.prepareStatement("select * from BOOKS left outer join PUBLISHER using(PUBID) where ISBN = ?");
             ps.setString(1, isbn);
             ResultSet rs = ps.executeQuery();
+            if (!ps.isClosed()) ps.close();
             if (rs.next()) return new Book(rs.getString("isbn"), rs.getString("title"), rs.getString("pubdate"), new Publisher(rs.getInt("pubid"), rs.getString("name"), rs.getString("contact"), rs.getString("phone")), rs.getDouble("cost"), rs.getDouble("retail"), rs.getDouble("discount"), rs.getString("category"));
         } catch (SQLException e) {
             e.printStackTrace();
