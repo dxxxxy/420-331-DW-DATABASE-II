@@ -61,10 +61,8 @@ public class Season implements SQLData {
             stmt.setInt(1, season_id);
             stmt.setString(2, season);
             stmt.executeUpdate();
+        } catch (SQLIntegrityConstraintViolationException ignored) {
 
-            System.out.println(this + " added to the database.");
-        } catch (SQLIntegrityConstraintViolationException e) {
-            System.out.println(this + " already exists in the database.");
         } catch (SQLException e) {
             e.printStackTrace();
         }

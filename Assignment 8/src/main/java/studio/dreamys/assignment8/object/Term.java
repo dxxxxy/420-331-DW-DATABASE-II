@@ -62,10 +62,8 @@ public class Term implements SQLData {
             stmt.setInt(1, term_id);
             stmt.setInt(2, season_id);
             stmt.executeUpdate();
-
-            System.out.println(this + " added to the database.");
-        } catch (SQLIntegrityConstraintViolationException e) {
-            System.out.println(this + " already exists in the database.");
+        } catch (SQLIntegrityConstraintViolationException ignored) {
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }

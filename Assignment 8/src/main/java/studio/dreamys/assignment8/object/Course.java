@@ -11,13 +11,12 @@ public class Course implements SQLData {
     private int clazz;
     private int lecture;
     private int homework;
-    private int total;
 
     public Course() {
 
     }
 
-    public Course(String id, int term_id, int education_id, String name, String description, int clazz, int lecture, int homework, int total) {
+    public Course(String id, int term_id, int education_id, String name, String description, int clazz, int lecture, int homework) {
         this.id = id;
         this.term_id = term_id;
         this.education_id = education_id;
@@ -26,7 +25,6 @@ public class Course implements SQLData {
         this.clazz = clazz;
         this.lecture = lecture;
         this.homework = homework;
-        this.total = total;
     }
 
     public String getId() {
@@ -93,14 +91,6 @@ public class Course implements SQLData {
         this.homework = homework;
     }
 
-    public int getTotal() {
-        return total;
-    }
-
-    public void setTotal(int total) {
-        this.total = total;
-    }
-
     @Override
     public String toString() {
         return "Course{" +
@@ -112,7 +102,6 @@ public class Course implements SQLData {
                 ", clazz=" + clazz +
                 ", lecture=" + lecture +
                 ", homework=" + homework +
-                ", total=" + total +
                 '}';
     }
 
@@ -131,7 +120,6 @@ public class Course implements SQLData {
         clazz = stream.readInt();
         lecture = stream.readInt();
         homework = stream.readInt();
-        total = stream.readInt();
     }
 
     @Override
@@ -144,11 +132,10 @@ public class Course implements SQLData {
         stream.writeInt(clazz);
         stream.writeInt(lecture);
         stream.writeInt(homework);
-        stream.writeInt(total);
     }
 
     public void addToDatabase(Connection conn) {
-        try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO COURSE VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
+        try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO COURSE VALUES (?, ?, ?, ?, ?, ?, ?, ?)")) {
             stmt.setString(1, id);
             stmt.setInt(2, term_id);
             stmt.setInt(3, education_id);
@@ -157,12 +144,9 @@ public class Course implements SQLData {
             stmt.setInt(6, clazz);
             stmt.setInt(7, lecture);
             stmt.setInt(8, homework);
-            stmt.setInt(9, total);
             stmt.executeUpdate();
-
-            System.out.println(this + " added to the database.");
-        } catch (SQLIntegrityConstraintViolationException e) {
-            System.out.println(this + " already exists in the database.");
+        } catch (SQLIntegrityConstraintViolationException ignored) {
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }

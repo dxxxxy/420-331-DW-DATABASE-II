@@ -26,7 +26,7 @@ CREATE TABLE COURSE(
     description VARCHAR2(500) NOT NULL,
     class NUMBER(1) NOT NULL,
     lecture NUMBER(1) NOT NULL,
-    homework NUMBER(1) NOT NULL,
+    homework NUMBER(1) NOT NULL
 );
 
 INSERT INTO SEASON VALUES (1, 'Fall');
@@ -58,7 +58,7 @@ CREATE OR REPLACE TYPE COURSE_TYPE AS OBJECT (
     description VARCHAR2(200),
     class NUMBER(1),
     lecture NUMBER(1),
-    homework NUMBER(1),
+    homework NUMBER(1)
 );
 
 CREATE OR REPLACE TYPE TERM_TYPE AS OBJECT (

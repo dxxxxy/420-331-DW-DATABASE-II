@@ -10,7 +10,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class CourseListServices {
-    private Connection conn;
+    private final Connection conn;
 
     public CourseListServices(String username, String password) {
         try {
@@ -22,16 +22,18 @@ public class CourseListServices {
 
     public void close() {
         try {
-            conn.close();
+            if (conn != null && !conn.isClosed()) {
+                conn.close();
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void addCourse(Season season, Term term, Education education, Course course) {
-        season.addToDatabase(conn);
-        term.addToDatabase(conn);
-        education.addToDatabase(conn);
-        course.addToDatabase(conn);
+    public void addCourse(int season_id, String season, int term_id, int education_id, String education, String id, String name, String description, int clazz, int lecture, int homework) {
+        new Season(season_id, season).addToDatabase(conn);
+        new Term(term_id, season_id).addToDatabase(conn);
+        new Education(education_id, education).addToDatabase(conn);
+        new Course(id, term_id, education_id, name, description, clazz, lecture, homework).addToDatabase(conn);
     }
 }
