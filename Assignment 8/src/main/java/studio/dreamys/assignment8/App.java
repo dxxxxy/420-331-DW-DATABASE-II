@@ -13,13 +13,13 @@ public class App {
 
         //add course
         courseListServices.addCourse(
-                "420-310-DW",
-                2, "Fall",
-                3,
+                "420-510-DW",
+                1, "Fall",
+                5,
                 1,
                 "Concentration",
-                "Programming III",
-                "The course will enhance the students’ knowledge of object-oriented programming and Java to produce stand-alone applications employing reusable objects, data structures and the Java collections framework. The concepts inheritance, polymorphism, data abstraction and programming to interfaces reused to design software. Students are introduced to software version controlled effective team collaboration.",
+                "Programming IV",
+                "The course will focus on the use of algorithms and data structures to simulate real-life phenomena using an appropriate gaming framework. Projects are implemented using an object-oriented language.",
                 3,
                 3,
                 3);
