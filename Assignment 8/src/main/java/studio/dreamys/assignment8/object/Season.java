@@ -3,16 +3,18 @@ package studio.dreamys.assignment8.object;
 import java.sql.*;
 
 public class Season implements SQLData {
+    public static final String SQL_TYPE_NAME = "SEASON_TYPE";
+
     private int season_id;
-    private String season;
+    private String season_name;
 
     public Season() {
 
     }
 
-    public Season(int season_id, String season) {
+    public Season(int season_id, String season_name) {
         this.season_id = season_id;
-        this.season = season;
+        this.season_name = season_name;
     }
 
     public int getSeason_id() {
@@ -23,19 +25,19 @@ public class Season implements SQLData {
         this.season_id = season_id;
     }
 
-    public String getSeason() {
-        return season;
+    public String getSeason_name() {
+        return season_name;
     }
 
-    public void setSeason(String season) {
-        this.season = season;
+    public void setSeason_name(String season_name) {
+        this.season_name = season_name;
     }
 
     @Override
     public String toString() {
         return "Season{" +
                 "season_id=" + season_id +
-                ", season='" + season + '\'' +
+                ", season='" + season_name + '\'' +
                 '}';
     }
 
@@ -47,22 +49,19 @@ public class Season implements SQLData {
     @Override
     public void readSQL(SQLInput stream, String typeName) throws SQLException {
         season_id = stream.readInt();
-        season = stream.readString();
+        season_name = stream.readString();
     }
 
     @Override
     public void writeSQL(SQLOutput stream) throws SQLException {
         stream.writeInt(season_id);
-        stream.writeString(season);
+        stream.writeString(season_name);
     }
 
     public void addToDatabase(Connection conn) {
-        try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO SEASON VALUES (?, ?)")) {
-            stmt.setInt(1, season_id);
-            stmt.setString(2, season);
-            stmt.executeUpdate();
-        } catch (SQLIntegrityConstraintViolationException ignored) {
-
+        try (CallableStatement cs = conn.prepareCall("call add_season(?)")) {
+            cs.setObject(1, this);
+            cs.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }

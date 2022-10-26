@@ -3,9 +3,11 @@ package studio.dreamys.assignment8.object;
 import java.sql.*;
 
 public class Course implements SQLData {
+    public static final String SQL_TYPE_NAME = "COURSE_TYPE";
+
     private String id;
-    private int term_id;
-    private int education_id;
+    private Term term;
+    private Education education;
     private String name;
     private String description;
     private int clazz;
@@ -16,17 +18,16 @@ public class Course implements SQLData {
 
     }
 
-    public Course(String id, int term_id, int education_id, String name, String description, int clazz, int lecture, int homework) {
+    public Course(String id, Term term, Education education, String name, String description, int clazz, int lecture, int homework) {
         this.id = id;
-        this.term_id = term_id;
-        this.education_id = education_id;
+        this.term = term;
+        this.education = education;
         this.name = name;
         this.description = description;
         this.clazz = clazz;
         this.lecture = lecture;
         this.homework = homework;
     }
-
     public String getId() {
         return id;
     }
@@ -35,20 +36,20 @@ public class Course implements SQLData {
         this.id = id;
     }
 
-    public int getTerm_id() {
-        return term_id;
+    public Term getTerm() {
+        return term;
     }
 
-    public void setTerm_id(int term_id) {
-        this.term_id = term_id;
+    public void setTerm(Term term) {
+        this.term = term;
     }
 
-    public int getEducation_id() {
-        return education_id;
+    public Education getEducation() {
+        return education;
     }
 
-    public void setEducation_id(int education_id) {
-        this.education_id = education_id;
+    public void setEducation(Education education) {
+        this.education = education;
     }
 
     public String getName() {
@@ -95,8 +96,8 @@ public class Course implements SQLData {
     public String toString() {
         return "Course{" +
                 "id='" + id + '\'' +
-                ", term_id=" + term_id +
-                ", education_id=" + education_id +
+                ", term=" + term +
+                ", education=" + education +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", clazz=" + clazz +
@@ -107,14 +108,14 @@ public class Course implements SQLData {
 
     @Override
     public String getSQLTypeName() throws SQLException {
-        return "COURSE_TYPE";
+        return SQL_TYPE_NAME;
     }
 
     @Override
     public void readSQL(SQLInput stream, String typeName) throws SQLException {
         id = stream.readString();
-        term_id = stream.readInt();
-        education_id = stream.readInt();
+        term = stream.readObject(Term.class);
+        education = stream.readObject(Education.class);
         name = stream.readString();
         description = stream.readString();
         clazz = stream.readInt();
@@ -125,8 +126,8 @@ public class Course implements SQLData {
     @Override
     public void writeSQL(SQLOutput stream) throws SQLException {
         stream.writeString(id);
-        stream.writeInt(term_id);
-        stream.writeInt(education_id);
+        stream.writeObject(term);
+        stream.writeObject(education);
         stream.writeString(name);
         stream.writeString(description);
         stream.writeInt(clazz);
@@ -135,18 +136,9 @@ public class Course implements SQLData {
     }
 
     public void addToDatabase(Connection conn) {
-        try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO COURSE VALUES (?, ?, ?, ?, ?, ?, ?, ?)")) {
-            stmt.setString(1, id);
-            stmt.setInt(2, term_id);
-            stmt.setInt(3, education_id);
-            stmt.setString(4, name);
-            stmt.setString(5, description);
-            stmt.setInt(6, clazz);
-            stmt.setInt(7, lecture);
-            stmt.setInt(8, homework);
-            stmt.executeUpdate();
-        } catch (SQLIntegrityConstraintViolationException ignored) {
-            
+        try (CallableStatement cs = conn.prepareCall("call add_course(?)")) {
+            cs.setObject(1, this);
+            cs.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }

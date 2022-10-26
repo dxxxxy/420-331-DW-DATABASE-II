@@ -3,16 +3,18 @@ package studio.dreamys.assignment8.object;
 import java.sql.*;
 
 public class Term implements SQLData {
+    public static final String SQL_TYPE_NAME = "TERM_TYPE";
+
     private int term_id;
-    private int season_id;
+    private Season season;
 
     public Term() {
 
     }
 
-    public Term(int term_id, int season_id) {
+    public Term(int term_id, Season season) {
         this.term_id = term_id;
-        this.season_id = season_id;
+        this.season = season;
     }
 
     public int getTerm_id() {
@@ -23,47 +25,43 @@ public class Term implements SQLData {
         this.term_id = term_id;
     }
 
-    public int getSeason_id() {
-        return season_id;
+    public Season getSeason() {
+        return season;
     }
 
-    public void setSeason_id(int season_id) {
-        this.season_id = season_id;
+    public void setSeason(Season season) {
+        this.season = season;
     }
 
     @Override
     public String toString() {
         return "Term{" +
                 "term_id=" + term_id +
-                ", season_id=" + season_id +
+                ", season=" + season +
                 '}';
     }
 
-
     @Override
     public String getSQLTypeName() throws SQLException {
-        return "TERM_TYPE";
+        return SQL_TYPE_NAME;
     }
 
     @Override
     public void readSQL(SQLInput stream, String typeName) throws SQLException {
         term_id = stream.readInt();
-        season_id = stream.readInt();
+        season = stream.readObject(Season.class);
     }
 
     @Override
     public void writeSQL(SQLOutput stream) throws SQLException {
         stream.writeInt(term_id);
-        stream.writeInt(season_id);
+        stream.writeObject(season);
     }
 
     public void addToDatabase(Connection conn) {
-        try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO TERM VALUES (?, ?)")) {
-            stmt.setInt(1, term_id);
-            stmt.setInt(2, season_id);
-            stmt.executeUpdate();
-        } catch (SQLIntegrityConstraintViolationException ignored) {
-            
+        try (CallableStatement cs = conn.prepareCall("call add_term(?)")) {
+            cs.setObject(1, this);
+            cs.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
