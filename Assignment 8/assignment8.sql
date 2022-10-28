@@ -107,10 +107,25 @@ END;
 
 CREATE OR REPLACE PROCEDURE ADD_COURSE(COURSE_IN IN COURSE_TYPE) AS
 BEGIN
-    INSERT INTO COURSE VALUES(COURSE_IN.id, COURSE_IN.term.term_id, COURSE_IN.education.education_id, COURSE_IN.name, COURSE_IN.description, COURSE_IN.class, COURSE_IN.lecture, COURSE_IN.homework);
+    INSERT INTO COURSE VALUES(COURSE_IN.id,
+                              COURSE_IN.term.term_id,
+                              COURSE_IN.education.education_id,
+                              COURSE_IN.name,
+                              COURSE_IN.description,
+                              COURSE_IN.class,
+                              COURSE_IN.lecture,
+                              COURSE_IN.homework);
 EXCEPTION
     WHEN DUP_VAL_ON_INDEX THEN
-        UPDATE COURSE SET term_id = COURSE_IN.term.term_id, education_id = COURSE_IN.education.education_id, name = COURSE_IN.name, description = COURSE_IN.description, class = COURSE_IN.class, lecture = COURSE_IN.lecture, homework = COURSE_IN.homework WHERE id = COURSE_IN.id;
+        UPDATE COURSE
+            SET term_id = COURSE_IN.term.term_id,
+                education_id = COURSE_IN.education.education_id,
+                name = COURSE_IN.name,
+                description = COURSE_IN.description,
+                class = COURSE_IN.class,
+                lecture = COURSE_IN.lecture,
+                homework = COURSE_IN.homework
+        WHERE id = COURSE_IN.id;
 END;
 
 COMMIT;
