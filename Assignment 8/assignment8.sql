@@ -85,6 +85,7 @@ CREATE OR REPLACE PROCEDURE ADD_SEASON(SEASON_IN IN SEASON_TYPE) AS
 BEGIN
     INSERT INTO SEASON VALUES(SEASON_IN.season_id, SEASON_IN.season_name);
 EXCEPTION
+    -- update fields if already exists
     WHEN DUP_VAL_ON_INDEX THEN
         UPDATE SEASON SET season_name = SEASON_IN.season_name WHERE season_id = SEASON_IN.season_id;
 END;
@@ -93,6 +94,7 @@ CREATE OR REPLACE PROCEDURE ADD_TERM(TERM_IN IN TERM_TYPE) AS
 BEGIN
     INSERT INTO TERM VALUES(TERM_IN.term_id, TERM_IN.season.season_id);
 EXCEPTION
+    -- update fields if already exists
     WHEN DUP_VAL_ON_INDEX THEN
         UPDATE TERM SET season_id = TERM_IN.season.season_id WHERE term_id = TERM_IN.term_id;
 END;
@@ -101,6 +103,7 @@ CREATE OR REPLACE PROCEDURE ADD_EDUCATION(EDUCATION_IN IN EDUCATION_TYPE) AS
 BEGIN
     INSERT INTO EDUCATION VALUES(EDUCATION_IN.education_id, EDUCATION_IN.education_name);
 EXCEPTION
+    -- update fields if already exists
     WHEN DUP_VAL_ON_INDEX THEN
         UPDATE EDUCATION SET education_name = EDUCATION_IN.education_name WHERE education_id = EDUCATION_IN.education_id;
 END;
@@ -116,6 +119,7 @@ BEGIN
                               COURSE_IN.lecture,
                               COURSE_IN.homework);
 EXCEPTION
+    -- update fields if already exists
     WHEN DUP_VAL_ON_INDEX THEN
         UPDATE COURSE
             SET term_id = COURSE_IN.term.term_id,
