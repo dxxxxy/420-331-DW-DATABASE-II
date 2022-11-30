@@ -1,5 +1,6 @@
-import java.util.Date;
+package studio.dreamys;
 
+@SuppressWarnings("JavadocDeclaration")
 public interface IUser {
     /**
      * Gets the salt
