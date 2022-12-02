@@ -9,7 +9,7 @@ CREATE TABLE JLUSERS (
 );
 
 CREATE TYPE JLUSER_TYPE AS OBJECT (
-    userid VARCHAR(20),
+    userID VARCHAR(20),
     salt RAW(20),
     hash RAW(100),
     failedLoginCount NUMBER(1)
@@ -17,7 +17,7 @@ CREATE TYPE JLUSER_TYPE AS OBJECT (
 
 CREATE OR REPLACE PROCEDURE ADD_USER (user IN JLUSER_TYPE) AS
 BEGIN
-    INSERT INTO JLUSERS VALUES (user.userid, user.salt, user.hash, user.failedLoginCount);
+    INSERT INTO JLUSERS VALUES (user.userID, user.salt, user.hash, user.failedLoginCount);
 EXCEPTION
     WHEN DUP_VAL_ON_INDEX THEN
         UPDATE_USER(user);
@@ -28,7 +28,7 @@ BEGIN
     UPDATE JLUSERS SET salt = user.salt,
                        hash = user.hash,
                        failedLoginCount = user.failedLoginCount
-        WHERE userID = user.userid;
+        WHERE userID = user.userID;
 END;
 
 CREATE OR REPLACE FUNCTION GET_USER (userID_ IN VARCHAR2) RETURN JLUSER_TYPE IS
