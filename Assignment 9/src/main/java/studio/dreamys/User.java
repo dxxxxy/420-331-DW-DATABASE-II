@@ -13,6 +13,11 @@ public class User implements IUser, SQLData {
     private byte[] hash;
     private long failedLoginCount;
 
+    @SuppressWarnings("unused")
+    public User() {
+
+    }
+
     public User(String userID, byte[] salt, byte[] hash, long failedLoginCount) {
         this.userID = userID;
         this.salt = salt;
