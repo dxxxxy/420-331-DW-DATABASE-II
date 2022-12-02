@@ -1,6 +1,6 @@
 package studio.dreamys;
 
-@SuppressWarnings("JavadocDeclaration")
+@SuppressWarnings({"JavadocDeclaration", "unused"})
 public interface IUser {
     /**
      * Gets the salt
