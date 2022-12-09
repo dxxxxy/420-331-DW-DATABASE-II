@@ -9,15 +9,17 @@ public class App {
 
         System.out.println("Welcome, please enter your username and password to login.");
         IJLSecurity security;
-        while (true) {
+        while (true) { //retry loop
             try {
                 //sign in to database
                 String username = System.console().readLine("\nUsername: ");
                 String password = String.valueOf(System.console().readPassword("Password: "));
+
                 clearConsole();
+
                 security = new JLSecurity(username, password);
                 System.out.println("Welcome, " + username + "!");
-                break;
+                break; //escape retry loop
             } catch (SQLException e) {
                 System.out.println("There was an error while connecting to the database. Please try again.");
             }

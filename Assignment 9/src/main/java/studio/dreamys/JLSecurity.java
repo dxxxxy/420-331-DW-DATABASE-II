@@ -84,6 +84,7 @@ public class JLSecurity implements IJLSecurity {
             return false;
         }
 
+        //check if hashes match
         boolean same = Arrays.equals(hash, check_hash);
 
         if (!same) {
@@ -94,7 +95,6 @@ public class JLSecurity implements IJLSecurity {
             UpdateDB(dbUser);
         }
 
-        //check if hashes match
         return same;
     }
 
@@ -113,7 +113,7 @@ public class JLSecurity implements IJLSecurity {
     }
 
     private void UpdateDB(IUser user) {
-        try (CallableStatement cs = conn.prepareCall("{ call ADD_USER(?)}")) {
+        try (CallableStatement cs = conn.prepareCall("{ call ADD_USER(?) }")) {
             cs.setObject(1, user);
             cs.execute();
 
